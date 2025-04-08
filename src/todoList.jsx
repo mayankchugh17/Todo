@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function TodoList(){
    
-    let [todos, setTodos] = useState([{task : "sample tasks", id : uuidv4()}])
+    let [todos, setTodos] = useState([{task : "sample tasks", id : uuidv4(), isDone : false}])
     let [newTodo, setNewTodo] = useState("");
 
     let addNewTodo = () => {
@@ -31,7 +31,6 @@ export default function TodoList(){
     }
 
     let upperCaseIt = (id) =>{
-
         setTodos((prevTodos)=>
             prevTodos.map((todo)=>{
                 if(todo.id == id)
@@ -39,6 +38,23 @@ export default function TodoList(){
                     return {
                         ...todo,
                         task: todo.task.toUpperCase(),
+                    };
+                }
+                else{
+                    return todo;    
+                }
+            })
+        )
+    }
+
+    let markAsDone = (id) =>{
+        setTodos((prevTodos)=>
+            prevTodos.map((todo)=>{
+                if(todo.id == id)
+                {
+                    return {
+                        ...todo,
+                        isDone : true
                     };
                 }
                 else{
@@ -60,9 +76,11 @@ export default function TodoList(){
             {
                 todos.map((todo)=>(
                     <li key={todo.id}> 
-                        <span>{todo.task}</span>    &nbsp;&nbsp;&nbsp;
+                        <span style={todo.isDone ? {textDecorationLine: "line-through"} : {}}>{todo.task}</span>    &nbsp;&nbsp;&nbsp;
                         <button onClick={()=>deleteTodo(todo.id)}>Delete</button>&nbsp;&nbsp;&nbsp;         
-                        <button onClick={()=>upperCaseIt(todo.id)}>Upppercase</button>
+                        <button onClick={()=>upperCaseIt(todo.id)}>Upppercase</button>&nbsp;&nbsp;&nbsp;
+                        <button onClick={()=>markAsDone(todo.id)}>Mark as Done</button>
+
                     <br /><br />
                     </li>
                 ))
