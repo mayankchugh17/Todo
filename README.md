@@ -1,4 +1,4 @@
-be  # Todo using React 
+Todo using React 
 
 This was my first and basic project in React in which you can add your tasks to be performed.   
 
